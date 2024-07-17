@@ -11,13 +11,13 @@ set(SIBR_PROJECT "hierarchyviewer")
 project(sibr_${SIBR_PROJECT} LANGUAGES CXX)
 
 sibr_gitlibrary(TARGET CudaDiffRasterizer
-    GIT_REPOSITORY 	"https://gitlab.inria.fr/bkerbl/diff-gaussian-rasterization.git"
-    GIT_TAG			"d1d498da70066d54f3fe33a358f805333e6bdd8e"
+    GIT_REPOSITORY 	"https://github.com/graphdeco-inria/hierarchy-rasterizer.git"
+    GIT_TAG			"448a9d6a8a8b283f74ce8ec327c0ed24c9ac068e"
 )
 
 sibr_gitlibrary(TARGET GaussianHierarchy
-    GIT_REPOSITORY 	"https://gitlab.inria.fr/bkerbl/gaussianhierarchy.git"
-    GIT_TAG			"78e9df441be6aab57061b31bc26ced010912367f"
+    GIT_REPOSITORY 	"https://github.com/graphdeco-inria/gaussian-hierarchy.git"
+    GIT_TAG			"9a49b12c2ed8fd903b3b984a14646f91319a3655"
 )
 
 find_package(CUDAToolkit REQUIRED)
