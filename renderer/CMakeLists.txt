@@ -12,12 +12,12 @@ project(sibr_${SIBR_PROJECT} LANGUAGES CXX)
 
 sibr_gitlibrary(TARGET CudaDiffRasterizer
     GIT_REPOSITORY 	"https://github.com/graphdeco-inria/hierarchy-rasterizer.git"
-    GIT_TAG			"448a9d6a8a8b283f74ce8ec327c0ed24c9ac068e"
+    GIT_TAG			"17077fc4ecfdb028e3ff012b45459f85ba08a390"
 )
 
 sibr_gitlibrary(TARGET GaussianHierarchy
     GIT_REPOSITORY 	"https://github.com/graphdeco-inria/gaussian-hierarchy.git"
-    GIT_TAG			"9a49b12c2ed8fd903b3b984a14646f91319a3655"
+    GIT_TAG			"677c8553dc64dfd62c272eca94a291a277733113"
 )
 
 find_package(CUDAToolkit REQUIRED)
