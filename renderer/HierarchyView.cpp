@@ -340,7 +340,9 @@ bool sibr::HierarchyView::addNodePackage(
 	{
 		//std::cout << "Out of mem!" << std::endl;
 		//sizeLimit = std::max(sizeLimit, 0.00001f);
-		sizeLimit *= 1.05f;
+		if (tau == 0)
+			tau = 1.0f;
+		tau *= 1.05f;
 		return false;
 	}
 
@@ -387,6 +389,14 @@ bool sibr::HierarchyView::addNodePackage(
 	cuda_nodes_offset += node_copy_count;
 
 	return true;
+}
+
+float tau2Limit(float tau, float tanfovx, int width)
+{
+	if (tau == 0)
+		return 0;
+
+	return (2.f * (tau + 0.5f)) * tanfovx / (0.5f * width);
 }
 
 int sibr::HierarchyView::createNodePackage(
@@ -964,17 +974,18 @@ void sibr::HierarchyView::onRenderIBR(sibr::IRenderTarget& dst, const sibr::Came
 		buffered = false;
 	}
 
+	float fovy = eye.fovy();
+	float fovx = 2.0f * atan(tan(eye.fovy() * 0.5f) * eye.aspect());
+	float tan_fovx = tan(fovx * 0.5f);
+	float tan_fovy = tan(fovy * 0.5f);
+	sizeLimit = tau2Limit(tau, tan_fovx, _resolution.x());
+
 	if (showSfm)
 	{
 		_pointbasedrenderer->process(_scene->proxies()->proxy(), eye, dst);
 	}
 	else
 	{
-		float fovy = eye.fovy();
-		float fovx = 2.0f * atan(tan(eye.fovy() * 0.5f) * eye.aspect());
-		float tan_fovx = tan(fovx * 0.5f);
-		float tan_fovy = tan(fovy * 0.5f);
-
 		*view_mat_ptr = view_mat;
 		*proj_mat_ptr = proj_mat;
 
@@ -1066,7 +1077,7 @@ void sibr::HierarchyView::onGUI()
 		{
 			ImGui::InputFloat("Zfar", &_zfar);
 		}
-		ImGui::InputFloat("Size Limit", &sizeLimit);
+		ImGui::InputFloat("Tau (size limit)", &tau);
 
 		ImGui::InputInt("Cleanup Rate", &cleanupFrequency);
 		cleanupFrequency = std::max(10, cleanupFrequency);

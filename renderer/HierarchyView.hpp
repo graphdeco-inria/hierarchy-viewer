@@ -87,7 +87,8 @@ namespace sibr {
 		float biglimit = 30.0f;
 		int cleanupFrequency = 100;
 
-		float sizeLimit = 0.01f;
+		float tau = 9.0f;
+		float sizeLimit = 0.03f;
 
 		int GAUSS_MEMLIMIT = 16000000;
 
